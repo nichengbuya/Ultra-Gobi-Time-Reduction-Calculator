@@ -24,7 +24,7 @@ function App() {
   }, [])
   const generate = () => {
     if(teamsData.length < 5){
-      alert('人数不够')
+      alert('人数不够呀')
     }
     const teams = famaleReduce();
     teams.sort((a,b)=>{
