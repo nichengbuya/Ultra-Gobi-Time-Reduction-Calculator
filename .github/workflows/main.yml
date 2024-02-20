@@ -1,47 +1,49 @@
+
 name: GitHub Actions Build and Deploy Demo
 
 on:
 
-  push:
+ push:
 
-    branches:
+     branches:
 
      - master
 
 jobs:
 
-  build-and-deploy:
+ build-and-deploy:
 
-    runs-on: ubuntu-latest
+  runs-on: ubuntu-latest
 
-    steps:
+  steps:
 
-      - name: checkout
+   - name: checkout
 
-        uses: actions/checkout@master
+     uses: actions/checkout@master
 
-        # 安装依赖
+    # 安装依赖
 
-      - name: install
+   - name: install
 
-        run: yarn
+     run: yarn
 
-        # 打包构建
+    # 打包构建
 
-      - name: build
+   - name: build
 
-        run: yarn build:test
+     run: yarn build:test
 
-        # 部署运行
+    # 部署运行
 
-      - name: Deploy
+   - name: Deploy
 
-        uses: JamesIves/github-pages-deploy-action@v4.3.0
+     uses: JamesIves/github-pages-deploy-action@v4.3.0
 
-        with:
+     with:
 
-          ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
+          ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
 
-          BRANCH: gh-pages
+          BRANCH: gh-pages
 
-          FOLDER: dist
+          FOLDER: dist
+
