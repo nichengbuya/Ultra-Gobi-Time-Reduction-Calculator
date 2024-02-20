@@ -8,6 +8,7 @@ function App() {
   const [K, setK] = useState(1.07);
   const [k, setk] = useState(1.07);
   const [D, setD] = useState(0);
+  const [t, setT] = useState(0);
   const [result, setResult] = useState([])
   const [teamsData, setTeamsData] = useState([]);
   const [teamResult , setTeamResult] = useState(0);
@@ -26,18 +27,18 @@ function App() {
     if(teamsData.length < 5){
       alert('人数不够呀')
     }
-    const teams = famaleReduce();
+    const teams = femaleReduce();
     teams.sort((a,b)=>{
       return Number(a.time) - Number(b.time)
     })
     setResult(teams);
-    setTeamResult( Number(teams[5].time) + ageReduce())
+    setTeamResult( Number(teams[5].time) - ageReduce() + t)
   }
 
-  const famaleReduce = ()=>{
+  const femaleReduce = ()=>{
     const teams = deepCopy(teamsData);
     for(let t of teams){
-      if(t.gender === 'famale'){
+      if(t.gender === 'female'){
         let res = Math.ceil(S * K * Math.pow(k, n - 1) * D);
         const mod = res % 30;
         if (mod >= 15) {
@@ -67,7 +68,7 @@ function App() {
   const addMember = () => {
     const teams = [...teamsData, {
       age: 40,
-      gender: 'famale',
+      gender: 'female',
       time: 0,
       name:'张三'
     }];
@@ -95,7 +96,7 @@ function App() {
             <label>
               性别:  <select value={i.gender} onChange={(e)=>handleChange(e, index, 'gender')}>
                 <option value="male">男</option>
-                <option value="famale">女</option>
+                <option value="female">女</option>
               </select>
             </label>
             <label>
@@ -125,6 +126,9 @@ function App() {
 
         <label>
           当日里程数: <input type="number" value={D} onChange={e => setD(e.target.value)} />
+        </label>
+        <label>
+          当日罚时: <input type="number" value={t} onChange={e => setT(e.target.value)} />
         </label>
         <button onClick={generate}>
           生成
