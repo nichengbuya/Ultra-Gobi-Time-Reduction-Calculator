@@ -23,3 +23,30 @@ export function deepCopy(obj) {
 
     return result;
 }
+
+export function formatTime(seconds) {
+    if (isNaN(seconds) || seconds < 0) {
+        return '00:00:00';
+    }
+
+    const hours = Math.floor(seconds / 3600);
+    const minutes = Math.floor((seconds % 3600) / 60);
+    const remainingSeconds = seconds % 60;
+
+    const paddedHours = hours.toString().padStart(2, '0');
+    const paddedMinutes = minutes.toString().padStart(2, '0');
+    const paddedSeconds = remainingSeconds.toString().padStart(2, '0');
+
+    return `${paddedHours}:${paddedMinutes}:${paddedSeconds}`;
+}
+
+export function mergeToSeconds(hours, minutes, seconds) {
+    // 将输入的小时、分钟和秒数转换为整数
+    hours = parseInt(hours) || 0;
+    minutes = parseInt(minutes) || 0;
+    seconds = parseInt(seconds) || 0;
+
+    // 计算总秒数
+    const totalSeconds = hours * 3600 + minutes * 60 + seconds;
+    return totalSeconds;
+}

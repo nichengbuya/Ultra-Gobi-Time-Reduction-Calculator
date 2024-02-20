@@ -1,7 +1,8 @@
 import React from 'react'
 import { useEffect, useState } from 'react'
 import './App.css';
-import { deepCopy } from './common/utils';
+import { deepCopy ,formatTime } from './common/utils';
+import TimeInput from './component/time-input';
 function App() {
   const [n, setN] = useState(1);
   const [S, setS] = useState(43);
@@ -28,11 +29,12 @@ function App() {
       alert('人数不够呀')
     }
     const teams = femaleReduce();
+    console.log(teams)
     teams.sort((a,b)=>{
       return Number(a.time) - Number(b.time)
     })
     setResult(teams);
-    setTeamResult( Number(teams[5].time) - ageReduce() + t)
+    setTeamResult( Number(teams[5].time) - ageReduce() + Number(t))
   }
 
   const femaleReduce = ()=>{
@@ -47,6 +49,7 @@ function App() {
           res -= mod;
         }
         t.time -= res;
+        console.log(res)
       }
     }
     return teams;
@@ -61,6 +64,7 @@ function App() {
   }
   const handleChange = (event , index , type) => {
     const teams = [...teamsData];
+
     teams[index][type] = event.target.value;
     setTeamsData(teams);
     localStorage.setItem('teamsData', JSON.stringify(teams));
@@ -100,7 +104,7 @@ function App() {
               </select>
             </label>
             <label>
-              成绩: <input type="number" value={i.time} onChange={(e)=>handleChange(e, index, 'time')} />
+              成绩: <TimeInput  value={i.time} onChange={e=>handleChange(e, index , 'time')}></TimeInput>
             </label>
             <button onClick={()=>onRemove(index)}>
               删除
@@ -134,10 +138,10 @@ function App() {
           生成
         </button>
         {result.map((i,index)=>{
-          return <div key={index}> {`${i.name}`}:{`${i.time}`} </div>
+          return <div key={index}> {`${i.name}`}:{`${formatTime(i.time)}`} </div>
         })}
         <label>
-            团队成绩:{teamResult}
+            团队成绩:{formatTime(teamResult)}
         </label>
       </div>
     </>
