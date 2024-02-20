@@ -31,7 +31,7 @@ jobs:
 
    - name: build
 
-     run: yarn build:test
+     run: yarn build
 
     # 部署运行
 
